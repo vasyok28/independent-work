@@ -1,0 +1,23 @@
+.counter {
+    padding: 10px;
+    background: #fff;
+    border-radius: 9px;
+    border: 1px solid #aba8a8;
+    width: 200px;
+}
+
+.title {
+    margin-top: 10px;
+    font-size: 9px;
+}
+
+.buttonWrapper {
+    margin-top: 10px;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 10px;
+    margin-top: 5px;
+}

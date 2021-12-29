@@ -1,0 +1,11 @@
+.display {
+    padding: 50px;
+    font-size: 3rem;
+    background: #efefef;
+    border-radius: 3px;
+    color: #939393;
+}
+
+.max {
+    color: red;
+}
