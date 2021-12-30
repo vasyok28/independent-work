@@ -22,7 +22,7 @@ export const Counter = ({counter, setCounter, defaultAddition, maxAddition}: Cou
 
     return (
         <div className={style.counter}>
-            <Display counter={counter}/>
+            <Display counter={counter} maxAddition={maxAddition}/>
 
             <div className="buttonWrapper">
                 <div className={style.title}>Two different components</div>
