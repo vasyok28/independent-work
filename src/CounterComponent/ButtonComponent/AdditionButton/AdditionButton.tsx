@@ -1,5 +1,5 @@
 import { ButtonPropsType } from "../../Counter/Counter";
 
-export const AdditionButton = ({counter, method}: ButtonPropsType) => {
-    return <button disabled={counter === 5} className="button" onClick={method}>Add</button>;
+export const AdditionButton = ({counter, method, maxAddition}: ButtonPropsType) => {
+    return <button disabled={counter === maxAddition} className="button" onClick={method}>Add</button>;
 }

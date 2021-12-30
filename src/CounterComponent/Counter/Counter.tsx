@@ -12,6 +12,7 @@ export type CounterType = {
 }
 export type ButtonPropsType = {
     counter: number
+    maxAddition?: number
     method: () => void
 }
 
@@ -26,7 +27,7 @@ export const Counter = ({counter, setCounter, defaultAddition, maxAddition}: Cou
             <div className="buttonWrapper">
                 <div className={style.title}>Two different components</div>
                 <div className={style.buttons}>
-                    <AdditionButton counter={counter} method={setAddition}/>
+                    <AdditionButton counter={counter} maxAddition={maxAddition} method={setAddition}/>
                     <ResetButton counter={counter} method={resetAddition}/>
                 </div>
             </div>
