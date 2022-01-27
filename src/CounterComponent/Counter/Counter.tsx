@@ -25,10 +25,10 @@ export const Counter = ({counter, setCounter, minAddition, maxAddition, getSetti
             <Display counter={counter} maxAddition={maxAddition} getSettingError={getSettingError} getCrashStorage={getCrashStorage}/>
 
             <Stack spacing={2} direction={'row'} sx={{marginTop: "15px"}}>
-                <ButtonCustom fullWidth variant={"contained"} disabled={getSettingError || counter === maxAddition}
+                <ButtonCustom fullWidth variant={"contained"} disabled={getSettingError || getCrashStorage || counter === maxAddition}
                               onClick={setAddition}>{'Add'}</ButtonCustom>
 
-                <ButtonCustom fullWidth variant={"contained"} disabled={getSettingError || counter < maxAddition}
+                <ButtonCustom fullWidth variant={"contained"} disabled={getSettingError || getCrashStorage || counter < maxAddition}
                               onClick={resetAddition}>{'Reset'}</ButtonCustom>
             </Stack>
         </Paper>
