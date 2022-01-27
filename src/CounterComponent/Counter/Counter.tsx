@@ -1,44 +1,36 @@
 import {Display} from "../Display/Display";
-import {AdditionButton} from "../ButtonComponent/AdditionButton/AdditionButton";
-import {ResetButton} from "../ButtonComponent/ResetButton/ResetButton";
-import {Button} from "../ButtonComponent/Button/Button";
-import style from './Counter.module.css'
+import {ButtonCustom} from "../ButtonCustom/ButtonCustom";
+import {Paper, Stack, Typography} from "@mui/material";
+import React from "react";
 
 export type CounterType = {
     counter: number
     setCounter: (value: number) => void
-    defaultAddition: number
+    minAddition: number
     maxAddition: number
-}
-export type ButtonPropsType = {
-    counter: number
-    maxAddition?: number
-    method: () => void
+    getSettingError: boolean
+    getCrashStorage: boolean
 }
 
-export const Counter = ({counter, setCounter, defaultAddition, maxAddition}: CounterType) => {
+export const Counter = ({counter, setCounter, minAddition, maxAddition, getSettingError, getCrashStorage}: CounterType) => {
     const setAddition = () => (counter < maxAddition) ? setCounter(++counter) : null;
-    const resetAddition = () => setCounter(defaultAddition);
+    const resetAddition = () => setCounter(minAddition);
 
     return (
-        <div className={style.counter}>
-            <Display counter={counter} maxAddition={maxAddition}/>
+        <Paper sx={{padding: '20px', display: "flex", flexDirection: "column", justifyContent: 'space-between'}}>
+            <Typography textAlign={'center'} mb={'15px'} variant="h6" color={'#757474'}>
+                Counter
+            </Typography>
 
-            <div className="buttonWrapper">
-                <div className={style.title}>Two different components</div>
-                <div className={style.buttons}>
-                    <AdditionButton counter={counter} maxAddition={maxAddition} method={setAddition}/>
-                    <ResetButton counter={counter} method={resetAddition}/>
-                </div>
-            </div>
+            <Display counter={counter} maxAddition={maxAddition} getSettingError={getSettingError} getCrashStorage={getCrashStorage}/>
 
-            <div className="buttonWrapper">
-                <div className={style.title}>One universal component</div>
-                <div className={style.buttons}>
-                    <Button title='Add' disabled={counter === maxAddition} method={setAddition}/>
-                    <Button title='Reset' disabled={counter === defaultAddition} method={resetAddition}/>
-                </div>
-            </div>
-        </div>
+            <Stack spacing={2} direction={'row'} sx={{marginTop: "15px"}}>
+                <ButtonCustom fullWidth variant={"contained"} disabled={getSettingError || counter === maxAddition}
+                              onClick={setAddition}>{'Add'}</ButtonCustom>
+
+                <ButtonCustom fullWidth variant={"contained"} disabled={getSettingError || counter < maxAddition}
+                              onClick={resetAddition}>{'Reset'}</ButtonCustom>
+            </Stack>
+        </Paper>
     )
 }
