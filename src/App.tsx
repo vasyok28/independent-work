@@ -51,6 +51,7 @@ function App() {
         localStorage.setItem('maxAddition', JSON.stringify(settings.maxAddition));
         localStorage.setItem('minAddition', JSON.stringify(settings.minAddition));
 
+        setSettings({...settings});
         setCounter(settings.minAddition);
     }
     const onChangeSettings = (action: ChangeSettingsType) => {
@@ -74,7 +75,6 @@ function App() {
         <Container fixed>
             <Grid justifyContent={'center'} alignItems={'center'} height={'100vh'} container>
                 <Grid justifyContent={'center'} direction={"row-reverse"} gap={'20px'} container>
-
                     <CounterSettings settings={settings}
                                      onClickSetHandler={onClickSetHandler}
                                      onChangeSettings={onChangeSettings}
