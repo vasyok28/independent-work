@@ -12,7 +12,7 @@ type DisplayPropsType = {
 export const Display = ({counter, maxAddition, getSettingError, getCrashStorage}: DisplayPropsType) => {
     const message = getSettingError
         ? <span className={style.max}>Incorrect value</span>
-        : getCrashStorage ? 'enter values and press \'set\''
+        : getCrashStorage ? "enter values and press 'set'"
         : counter;
 
     return (

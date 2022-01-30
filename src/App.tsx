@@ -23,8 +23,10 @@ export type ChangeSettingsType = {
 
 function App() {
     const [defaultMinAddition, defaultMaxAddition] = [0, 10];
+    const minAddition = localStorage.getItem('minAddition');
+    const maxAddition = localStorage.getItem('maxAddition');
 
-    const [counter, setCounter] = useState<number>(defaultMinAddition);
+    const [counter, setCounter] = useState<number>(JSON.parse(minAddition || '') || defaultMinAddition);
     const [settings, setSettings] = useState<SettingAdditionType>({
         minAddition: defaultMinAddition,
         maxAddition: defaultMaxAddition,
@@ -33,8 +35,6 @@ function App() {
     });
 
     useLayoutEffect(() => {
-        const minAddition = localStorage.getItem('minAddition');
-        const maxAddition = localStorage.getItem('maxAddition');
 
         if (minAddition) {
             settings.minAddition = JSON.parse(minAddition);
