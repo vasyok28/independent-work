@@ -1,22 +1,44 @@
 import {Paper, Stack, TextField, Typography} from '@mui/material';
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useLayoutEffect} from 'react';
 import {ButtonCustom} from "../ButtonCustom/ButtonCustom";
-import {ChangeSettingsType, SettingAdditionType} from "../../App";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootStateType} from "../../state/store";
+import {setSetting, setSettingFromLocalStorageTC, setSettingTC} from "../../state/setting.reducer";
+import {resetCounter} from "../../state/counter-reducer";
 
-type CounterSettingsPropsType = {
-    settings: SettingAdditionType
-    onClickSetHandler: () => void
-    onChangeSettings: (action: ChangeSettingsType) => void
+export type SettingAdditionType = {
+    minAddition: number
+    maxAddition: number
+    errorMin: boolean
+    errorMax: boolean
 }
 
-export const CounterSettings: React.FC<CounterSettingsPropsType> = ({onClickSetHandler, onChangeSettings, settings}, ...props) => {
+export const CounterSettings = () => {
+    const dispatch = useDispatch();
+    const settings = useSelector((state: AppRootStateType) => state.setting);
 
-    const onChangeMinHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        onChangeSettings({type: 'minAddition', value: JSON.parse(e.target.value)});
+    useLayoutEffect(() => {
+        dispatch(setSettingFromLocalStorageTC());
+    }, []);
+
+    // Function
+    const onClickSetHandler = () => {
+        dispatch(setSetting({...settings}));
+        dispatch(setSettingTC());
+        dispatch(resetCounter(settings.minAddition));
     }
 
+    // Handler
+    const onChangeMinHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const value = JSON.parse(e.target.value);
+        const errorMin = value < 0 || value >= settings.maxAddition;
+
+        dispatch(setSetting({...settings, minAddition: value, errorMin}));
+    }
     const onChangeMaxHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        onChangeSettings({type: 'maxAddition', value: JSON.parse(e.target.value)});
+        const value = JSON.parse(e.target.value);
+        const errorMax = settings.maxAddition < 0 || settings.maxAddition <= value;
+        dispatch(setSetting({...settings, maxAddition: value, errorMax}));
     }
 
     return (
@@ -44,10 +66,7 @@ export const CounterSettings: React.FC<CounterSettingsPropsType> = ({onClickSetH
             </Stack>
 
             <Stack sx={{marginTop: '15px'}}>
-                <ButtonCustom variant={'outlined'}
-                              disabled={settings.errorMin || settings.errorMax}
-                              onClick={onClickSetHandler}
-                >{'Set'}</ButtonCustom>
+                <ButtonCustom variant={'outlined'} disabled={settings.errorMin || settings.errorMax} onClick={onClickSetHandler}>{'Set'}</ButtonCustom>
             </Stack>
         </Paper>
     );
